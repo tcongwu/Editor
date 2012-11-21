@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+     <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+     <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
+     <META HTTP-EQUIV="Expires" CONTENT="0">
+    
+    <title>Python Editor</title>
+    
+    <link rel="stylesheet" href="../css/python_style.css" type="text/css" />
+   
+    <link rel="stylesheet" href="../css/video.css" type="text/css" />
+    <link rel="stylesheet" href="../css/codemirror.css" type="text/css" />
+   
+ 
+    
+		<script type="text/javascript">
+		  var DOCUMENTATION_OPTIONS = {
+			URL_ROOT:    '',
+			VERSION:     '3rd Edition',
+			COLLAPSE_INDEX: false,
+			FILE_SUFFIX: '.html',
+			HAS_SOURCE:  true
+		  };
+		</script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="../js/bookfuncs.js"></script>
+    <script type="text/javascript" src="../js/codemirror.js"></script>
+    <script type="text/javascript" src="../js/python.js"></script>
+    <script type="text/javascript" src="../js/skulpt.js"></script>
+    <script type="text/javascript" src="../js/builtin.js"></script>
+	
+	 </head>
+  <body>
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+			<div class="section" id="hello-little-turtles">
+			<h1>Python Editor</h1>
+
+				<script>
+				   jQuery(function($) {
+					  $('#assignvid_thumb').click(function(e) {
+						 $('#assignvid').show();
+						 $('#assignvid_thumb').hide();
+						 jQuery.get("/hsblog",{'event':'video','act':'play','div_id': 'assignvid'});
+						 // Log the run event
+					  });
+				   });
+				</script>
+
+
+<div id="ch03_3" >
+<textarea cols="50" rows="12" id="ch03_3_code" class="active_code">
+import turtle
+wn = turtle.Screen()             # Set up the window and its attributes
+wn.bgcolor("lightgreen")
+
+
+tess = turtle.Turtle()           # create tess and set some attributes
+tess.color("hotpink")
+tess.pensize(5)
+
+alex = turtle.Turtle()           # create alex
+
+tess.forward(80)                 # Let tess draw an equilateral triangle
+tess.left(120)
+tess.forward(80)
+tess.left(120)
+tess.forward(80)
+tess.left(120)                   # complete the triangle
+
+tess.right(180)                  # turn tess around
+tess.forward(80)                 # move her away from the origin
+
+alex.forward(50)                 # make alex draw a square
+alex.left(90)
+alex.forward(50)
+alex.left(90)
+alex.forward(50)
+alex.left(90)
+alex.forward(50)
+alex.left(90)
+
+wn.exitonclick()
+
+</textarea>
+	<p class="ac_caption"><span class="ac_caption_text"> (ch03_3)</span> </p>
+	<button onclick="runit('ch03_3',this, undefined);">Run</button>
+
+	<br/>
+	<canvas id="ch03_3_canvas" height="400" width="400" style="border-style: solid; display: none"></canvas>
+	</div>
+  </body>
+</html>

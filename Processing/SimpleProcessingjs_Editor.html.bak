@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+        <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
+        <META HTTP-EQUIV="Expires" CONTENT="0">
+	<title>Simple Processingjs Editor</title>
+	<link rel="stylesheet" type="text/css" href="../JavaScript/tryit/tryit.css">
+	 <script src="../js/processing-1.1.0.min.js"></script>
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+	<table border="0" class="maintable" cellpadding="3px" cellspacing="3px">
+	<tbody>
+		<tr>
+			<td width="50%">
+			<p class="result_header"><h3>Simple Processingjs Editor</h3></p>  
+<input type="button" name="button" id="button" value="Run" onclick="eval(text.value);" />
+<textarea class="code_input" width="100%" height="400px"  name="text" id="text" wrap="logical">
+
+// Simple way to attach js code to the canvas is by using a function
+function sketchProc(processing) {
+  // Override draw function, by default it will be called 60 times per second
+  processing.draw = function() {
+    // determine center and max clock arm length
+    var centerX = processing.width / 2, centerY = processing.height / 2;
+    var maxArmLength = Math.min(centerX, centerY);
+
+    function drawArm(position, lengthScale, weight) {      
+      processing.strokeWeight(weight);
+      processing.line(centerX, centerY, 
+        centerX + Math.sin(position * 2 * Math.PI) * lengthScale * maxArmLength,
+        centerY - Math.cos(position * 2 * Math.PI) * lengthScale * maxArmLength);
+    }
+
+    // erase background
+    processing.background(224);
+
+    var now = new Date();
+
+    // Moving hours arm by small increments
+    var hoursPosition = (now.getHours() % 12 + now.getMinutes() / 60) / 12;
+    drawArm(hoursPosition, 0.5, 5);
+
+    // Moving minutes arm by small increments
+    var minutesPosition = (now.getMinutes() + now.getSeconds() / 60) / 60;
+    drawArm(minutesPosition, 0.80, 3);
+
+    // Moving hour arm by second increments
+    var secondsPosition = now.getSeconds() / 60;
+    drawArm(secondsPosition, 0.90, 1);
+  };
+  
+}
+
+var canvas = document.getElementById("canvas1");
+// attaching the sketchProc function to the canvas
+var p = new Processing(canvas, sketchProc);
+// p.exit(); to detach it
+</textarea>
+
+
+
+</td>
+
+<td valign="top">
+<p>&nbsp;</p>
+<p class="result_header">Your Result:</p>
+
+<canvas id="canvas1" width="500" height="400" style="border:1px solid #c3c3c3;" >
+	Your browser does not support the canvas element.
+</canvas>
+
+
+<script>
+
+  var script_text = $('#text').val();
+  var canvas=document.getElementById('canvas1');
+  var p	=  new Processing(canvas, script_text);
+
+</script>
+
+
+</td>
+</tr>
+<tr>
+<td align="left" class="bottomtext">
+Edit the code above and click to see the result.
+</td>
+
+</tr>
+</tbody></table>
+
+
+</body></html>

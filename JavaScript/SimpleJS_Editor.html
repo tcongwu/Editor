@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html dir="ltr" lang="en-US">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+        <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
+         <META HTTP-EQUIV="Expires" CONTENT="0">
+	<title>Simple JavaScript Editor</title>
+	<link rel="stylesheet" type="text/css" media="all" href="../css/js_style.css">
+	<script type="text/javascript" src="../js/l10n.js"></script>
+	<script type="text/javascript" src="../js/comment-reply.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+</head>
+
+<body class="page page-id-117 page-template-default">
+	<div id="wrapper" class="hfeed">
+		<div id="main">
+			<div id="container">
+				<div id="content" role="main">
+					<div id="post-117" class="post-117 page type-page status-publish hentry">
+						<h1 class="entry-title">Simple JavaScript Editor</h1>
+						<div class="entry-content">
+						<form onsubmit="return(false)"> Enter JavaScript code:<br> 
+							<textarea id="code" style="width: 670px; height: 150px" expandable="500">var string = "Hello World";
+$('#debug').text(string);
+</textarea> 
+							<br>
+							<input type="button" value="Run" onclick="run_code()"><br>
+							<span id="debug" style="border: 1px solid black; background-color: #fff0b0; xdisplay: none;">Hello World</span>
+ 
+						</form> 
+
+						<script> 
+							function run_code() {
+							var code = document.getElementById('code').value;
+							try {
+								 eval (code);
+								 } catch (e) {
+								 alert("ERROR: "+e);
+							  }
+						}
+						 
+						</script> 
+
+						<p>
+							You can write and test your JavaScript programs in this editor. You can also use jQuery commands (it is already loaded in the editor).
+						</p>
+
+				</div><!-- .entry-content -->
+			</div><!-- #post-## -->
+		</div><!-- #wrapper -->
+	</body>
+</html>

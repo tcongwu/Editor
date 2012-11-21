@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+
+<html dir="ltr" lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
+<META HTTP-EQUIV="Expires" CONTENT="0">
+<title>Processing.js </title>
+	<link rel="stylesheet" type="text/css" media="all" href="../css/js_style.css">
+	<script type="text/javascript" src="../js/l10n.js"></script>
+	<script type="text/javascript" src="../js/comment-reply.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+</head>
+
+<body class="page page-id-444 page-child parent-pageid-408 page-template-default">
+	<div id="wrapper" class="hfeed">
+		<div id="main">
+			<div id="container">
+				<div id="content" role="main">
+					<div id="post-444" class="post-444 page type-page status-publish hentry">
+						<h1 class="entry-title">Processing.js Editor</h1>
+					
+						<p>
+							Samples codes:
+							<input type="button" value="Blue Rays" onclick="run_sample(&#39;blue_rays&#39;)">
+							<input type="button" value="Drawing Board" onclick="run_sample(&#39;drawing_board&#39;)">
+							<input type="button" value="Star Painted" onclick="run_sample(&#39;star_painted&#39;)">
+							<input type="button" value="Moving Spotlights" onclick="run_sample(&#39;moving_spotlights&#39;)">
+
+						</p>
+						<p>
+
+							<script type="text/javascript" src="../js/processing-1.1.0.min.js"></script>
+
+							<textarea id="textarea_processing" style="width: 640px; height: 360px;"></textarea><br>
+							<input type="button" value="Run" onclick="process_this()">
+
+							<input type="button" value="Stop" onclick="
+							  if (typeof process_run == &#39;object&#39;) {
+								process_run.exit();
+							  }
+							  this.disabled=true;
+							" id="stop_button">
+
+							</p>
+							<p>
+								<canvas id="canvas1" style="border: 1px solid black;" tabindex="0" width="640" height="400"></canvas>
+							</p>
+							<p>
+
+<script>
+
+process_run = '';
+
+function process_this() {
+  document.getElementById('stop_button').disabled=false;
+  if (typeof process_run == 'object') {
+	process_run.exit();
+  }
+  var script_text = $('#textarea_processing').val();
+  var canvas=document.getElementById('canvas1');
+  if (process_run) {
+	process_run.exit();
+  }
+  if (script_text) {
+	process_run =  new Processing(canvas, script_text);
+  }
+}
+
+function run_sample(id) {
+  if (id) {
+	set_hash(id);
+  } else {
+	id = 'blue_rays'; // will run default demo
+  }
+  $('#textarea_processing').val( $('#'+id).text() );
+  process_this();
+}
+
+</script>
+
+<!-- start of sample codes -->
+
+<script type="application/processing" id="blue_rays">// Blue Rays - Move and Click
+int x0=0;  int y0=0;
+void setup() {
+  size(640, 400);
+}
+void draw() {
+  translate(width/2, height/2);
+  background(0);
+  stroke(80,170,240);
+  for (float i=-400;i<=400; i+=5) {
+	line (x0,y0,i+mouseX-width/2, mouseY-height/2-25+cos(i/33)*50);
+  }
+   if (mousePressed) {
+	  x0 = mouseX-width/2; y0 = mouseY-height/2-25;
+   }
+}
+</script>
+
+<script type="application/processing" id="drawing_board">// The Minimal Drawing Board
+void setup() {
+  size(640, 400);
+  background(0);
+}
+void draw() {
+  point(mouseX, mouseY);
+  mousePressed ? stroke(230,250,120) : stroke(60,180,255);
+}
+</script>
+
+<!-- code from clock:
+  px = Math.sin(position * 2 * Math.PI)
+  py = -Math.cos(position * 2 * Math.PI)
+  line (0,0, px, py);
+-->
+
+<script type="application/processing" id="star_painted">// Star Painted 
+float position = 0;
+float x0=0;
+float y0=0;
+float radius=40;
+
+size(640, 400);
+background(0);
+
+// Create background starfield
+for (int x = 0; x <width; x++){
+  stroke(random(150));
+  point(random(width),random(height));
+}
+
+void draw() {
+  px = x0 +Math.sin(position * 2 * Math.PI)*random(radius);
+  py = y0 -Math.cos(position * 2 * Math.PI)*random(radius);
+  line (x0, y0, px, py);
+  position += 0.1;
+  if (random(100)>98) {
+	x0=random(width);
+	y0=random(height);
+	radius = random(80); // define new max star radius size
+	int alpha = 25; // color transparency
+	stroke(55+random(200),155+random(100),155+random(100), alpha);
+	position = 0; // reset radius counter
+  }
+}
+</script>
+
+<script type="application/processing" id="moving_spotlights">// Moving Spotlights 
+float k = 0;
+void setup() {
+  size(620,400); 
+}
+void draw() {
+  k=k+0.005;
+  background(20,30,50);
+  fill(255,240,200,110);
+  for (int i=0; i<=10; i++) {
+	float x1 = width/2-sin(i*k/10)*160;
+	float y1 = sin(k/5)*70+20*sin(i*k/2)+70;
+	float x2 = sin(i/4)*i*50+150;
+	float y2 = height;
+	float x3 = x2-40*0;
+	float y3 = y2;
+	float x4 = x1+50;
+	float y4 = y1;
+	quad(x1,y1,  x2,y2, x3,y3,  x4,y4);
+  }
+  if (k>=10*2*PI) {
+	k=0;
+  }
+}
+</script>
+
+<script>
+
+function set_hash(hash_value) {
+  var old_hash_fn = window.onhashchange;
+  window.onhashchange = function() { return false }; // stops listener
+  window.location.hash = '!' + hash_value; // hash bang
+  setTimeout(function() { window.onhashchange = old_hash_fn }, 100); // restart listener
+}
+
+window.onhashchange = function() { init_run_sample(); };
+
+function init_run_sample() {
+  var hashbang = window.location.hash.replace("#!", "");
+  run_sample(hashbang);
+}
+init_run_sample();
+
+
+</script>
+
+							<!-- end of sample codes -->
+							</p>
+						</div><!-- .entry-content -->
+					</div><!-- #post-## -->	
+				</div><!-- #container -->
+			</div><!-- #main -->
+		</div><!-- #wrapper -->
+	</body>
+</html>
